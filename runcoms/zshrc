@@ -16,3 +16,7 @@ promptinit
 prompt skwp
 
 set -o emacs
+
+# Aliases
+
+alias cfg=/usr/local/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME
