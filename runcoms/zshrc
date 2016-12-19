@@ -19,5 +19,9 @@ set -o emacs
 
 # Aliases
 
-alias cfg='/usr/local/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias cfg="$(which git) --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias psgrep='ps aux | grep'
+
+# Custom PATH
+
+source $HOME/bin/tmuxinator.zsh
