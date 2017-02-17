@@ -15,13 +15,27 @@ autoload -Uz promptinit
 promptinit
 prompt skwp
 
-set -o emacs
+set -o vi
 
 # Aliases
-
 alias cfg="$(which git) --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias psgrep='ps aux | grep'
 
-# Custom PATH
+# Source zplug
+export ZPLUG_HOME=$HOME/.cfg/zplug
+source $ZPLUG_HOME/init.zsh
 
-source $HOME/bin/tmuxinator.zsh
+zplug "supercrabtree/k"
+
+if ! zplug check --verbose; then
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  else
+    echo
+  fi
+fi
+
+zplug load
+
+eval "$(tmuxifier init -)"
