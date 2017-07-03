@@ -13,29 +13,34 @@ fi
 # Customize to your needs...
 autoload -Uz promptinit
 promptinit
-prompt skwp
+prompt paradox
 
 set -o vi
 
 # Aliases
 alias cfg="$(which git) --git-dir=$HOME/.cfg/ --work-tree=$HOME"
-alias psgrep='ps aux | grep'
+alias dockerc='docker-compose'
+alias tmux-t='tmux attach -t'
+alias tmuxk='tmux kill-session -t'
+alias ber='bundle exec rspec'
 
-# Source zplug
-export ZPLUG_HOME=$HOME/.cfg/zplug
-source $ZPLUG_HOME/init.zsh
+export GOPATH="$HOME/go"
+export HOMEBREW_GITHUB_API_TOKEN=2c54f05c9629681a0aa3ad36d30e9de65ee7e472
 
-zplug "supercrabtree/k"
+psgrep() {
+  ps aux | grep --color=always $1 | grep -v grep | less -RFX
+}
 
-if ! zplug check --verbose; then
-  printf "Install? [y/N]: "
-  if read -q; then
-    echo; zplug install
-  else
-    echo
-  fi
-fi
+goel() {
+  cd $GOPATH/src/github.com/EmpregoLigado
+}
 
-zplug load
+devel() {
+  cd $HOME/Dev/el
+}
 
-eval "$(tmuxifier init -)"
+export PATH=$PATH:$GOPATH/bin:$HOME/bin
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
