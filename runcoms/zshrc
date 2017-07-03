@@ -13,7 +13,7 @@ fi
 # Customize to your needs...
 autoload -Uz promptinit
 promptinit
-prompt paradox
+prompt paradox2
 
 set -o vi
 
@@ -25,7 +25,7 @@ alias tmuxk='tmux kill-session -t'
 alias ber='bundle exec rspec'
 
 export GOPATH="$HOME/go"
-export HOMEBREW_GITHUB_API_TOKEN=2c54f05c9629681a0aa3ad36d30e9de65ee7e472
+source "$HOME/dotfiles/secret_keys.sh"
 
 psgrep() {
   ps aux | grep --color=always $1 | grep -v grep | less -RFX
