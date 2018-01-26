@@ -25,10 +25,16 @@ alias tmuxk='tmux kill-session -t'
 alias ber='bundle exec rspec'
 
 export GOPATH="$HOME/go"
-source "$HOME/dotfiles/secret_keys.sh"
+export PYENV_ROOT="$HOME/.pyenv"
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+
+
+if [[ -s "$HOME/dotfiles/secret_keys.sh" ]]; then
+  source "$HOME/dotfiles/secret_keys.sh"
+fi
 
 psgrep() {
-  ps aux | grep --color=always $1 | grep -v grep | less -RFX
+  ps aux | grep --color=always $1 | grep -v grep
 }
 
 goel() {
@@ -39,8 +45,30 @@ devel() {
   cd $HOME/Dev/el
 }
 
-export PATH=$PATH:$GOPATH/bin:$HOME/bin
+ackrb() {
+  ack --ruby \
+    --ignore-directory=".bundle" $1
+}
+
+ackgo() {
+  ack --go \
+    --ignore-directory="vendor" $1
+}
+
+branches-clear() {
+  git fetch --prune
+  git branch -r |
+    awk '{print $1}' \
+      | egrep -v -f /dev/fd/0 <(git branch -vv \
+      | grep origin) \
+      | awk '{print $1}' \
+      | xargs git branch -d
+}
+
+export PATH=$PATH:$GOPATH/bin:$HOME/bin:$HOME/.cargo/bin
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
+eval "$(tmuxifier init -)"
