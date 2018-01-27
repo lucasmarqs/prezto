@@ -41,6 +41,7 @@ zstyle ':prezto:load' pmodule \
   'completion' \
   'ruby' \
   'rails' \
+  'pyenv' \
   'node' \
   'git' \
   'osx' \
@@ -150,6 +151,11 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 
 # Automatically initialize virtualenvwrapper if pre-requisites are met.
 # zstyle ':prezto:module:python:virtualenv' initialize 'yes'
+
+#
+# Pyenv
+#
+zstyle ':prezto:module:pyenv:virtualenv' auto-switch 'yes'
 
 #
 # Screen

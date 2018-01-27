@@ -1,0 +1,38 @@
+#
+# Exposes information about Python environment via the $pyenv_info
+#
+
+# function pyenv-info {
+
+local virtualenv_format
+local virtualenv_formatted
+local version_format
+local version_formatted
+local version
+
+# Clean unp previous $pyenv_info
+unset pyenv_info
+typeset -gA pyenv_info
+
+# Grab the styling we might have to do
+zstyle -s ':prezto:module:pyenv:info:virtualenv' format 'virtualenv_format'
+zstyle -s ':prezto:module:pyenv:info:version' format 'version_format'
+
+# Format virtualenv
+if [[ -n "$virtualenv_format" ]]; then
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    zformat -f virtualenv_formatted "$virtualenv_format" "v:${VIRTUAL_ENV:t}"
+    pyenv_info[virtualenv]="$virtualenv_formatted"
+  fi
+fi
+
+if [[ -n "$version_format" ]]; then
+  version="${"$(pyenv version)"%% *}"
+
+  if [[ -n "$version" && "$version" != "system" ]]; then
+    zformat -f version_formatted "$version_format" "v:$version"
+    pyenv_info[version]="$version_formatted"
+  fi
+fi
+
+# }
