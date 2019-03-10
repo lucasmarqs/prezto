@@ -67,3 +67,6 @@ if (( $+commands[bundle] )); then
     && print vendor/bundle >>! .gitignore \
     && print vendor/cache  >>! .gitignore'
 fi
+
+# RSpec
+alias ber='bundle exec rspec'
